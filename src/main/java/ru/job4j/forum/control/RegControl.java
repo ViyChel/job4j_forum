@@ -2,11 +2,15 @@ package ru.job4j.forum.control;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.job4j.forum.model.Role;
 import ru.job4j.forum.model.User;
 import ru.job4j.forum.service.UserService;
+
+import java.util.EnumSet;
 
 /**
  * Class RegControl.
@@ -27,8 +31,15 @@ public class RegControl {
     }
 
     @PostMapping("/reg")
-    public String save(@ModelAttribute User user) {
+    public String save(User user, Model model) {
+        User userFromDb  = userService.findByName(user.getUsername());
+        if (userFromDb != null) {
+            model.addAttribute("message", "User exist!");
+            return "auth/reg";
+        }
         user.setPassword(encoder.encode(user.getPassword()));
+        user.setEnabled(true);
+        user.setRoles(EnumSet.of(Role.USER));
         userService.save(user);
         return "auth/login";
     }

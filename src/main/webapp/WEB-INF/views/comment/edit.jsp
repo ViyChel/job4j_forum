@@ -48,11 +48,13 @@
                     </div>
                     <div class="form-group">
                         <label>Автор:</label>
-                        <input type="text" class="form-control" name="name" value="${post.author.username}" readonly>
+                        <input type="text" class="form-control" name="username" value="${post.author.username}"
+                               readonly>
                     </div>
                     <div class="form-group">
                         <label>Комментарий:</label>
-                        <textarea name="text" class="form-control" placeholder="Введите текст комментария" cols="100" rows="5" required>${comment.message}</textarea>
+                        <textarea name="text" class="form-control" placeholder="Введите текст комментария" cols="100"
+                                  rows="5" required>${comment.message}</textarea>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Сохранить</button>

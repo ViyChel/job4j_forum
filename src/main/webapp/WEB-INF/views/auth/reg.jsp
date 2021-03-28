@@ -11,7 +11,6 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
     <title>Форум job4j</title>
 </head>
 <body>
@@ -24,9 +23,16 @@
             <form action='<c:url value="/reg" />' method="post">
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-user" ></i> </span>
+                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                     </div>
-                    <input name="username" class="form-control" placeholder="Имя" type="text" required>
+                    <c:choose>
+                        <c:when test="${message != null}">
+                            <input name="username" class="form-control" placeholder="Имя занято" type="text" required>
+                        </c:when>
+                        <c:otherwise>
+                            <input name="username" class="form-control" placeholder="Имя" type="text" required>
+                        </c:otherwise>
+                    </c:choose>
                 </div> <!-- form-group// -->
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
@@ -34,17 +40,12 @@
                     </div>
                     <input name="email" class="form-control" placeholder="Email" type="email" required>
                 </div> <!-- form-group// -->
-               <%-- <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
-                    </div>
-                    <input name="phone" class="form-control" placeholder="Телефон" type="text" required>
-                </div> <!-- form-group// -->--%>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                     </div>
-                    <input name="password" id="password" class="form-control" placeholder="Введите пароль" type="password" required>
+                    <input name="password" id="password" class="form-control" placeholder="Введите пароль"
+                           type="password" required>
                 </div> <!-- form-group// -->
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block"> Создать</button>

@@ -2,9 +2,7 @@ package ru.job4j.forum.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.forum.model.Comment;
-import ru.job4j.forum.repository.CommentStore;
-
-import java.util.Collection;
+import ru.job4j.forum.repository.CommentRepository;
 
 /**
  * Class CommentService.
@@ -15,30 +13,30 @@ import java.util.Collection;
  */
 @Service
 public class CommentService {
-    private final CommentStore store;
+    private final CommentRepository commentRepository;
 
-    public CommentService(CommentStore store) {
-        this.store = store;
+    public CommentService(CommentRepository commentRepository) {
+        this.commentRepository = commentRepository;
     }
 
     public Comment save(Comment model) {
-        return store.save(model);
+        return commentRepository.save(model);
     }
 
-    public Comment findById(int id) {
-        return store.findById(id);
+    public Comment findById(long id) {
+        return commentRepository.findById(id).orElse(new Comment());
     }
 
-    public Collection<Comment> findAll() {
-        return store.findAll();
+    public Iterable<Comment> findAll() {
+        return commentRepository.findAll();
     }
 
-    public void deleteById(int id) {
-        store.deleteById(id);
+    public void deleteById(long id) {
+        commentRepository.deleteById(id);
     }
 
-    public void deleteByPostId(int id) {
-        store.deleteCommentsByPostId(id);
+    public void deleteByPostId(long id) {
+        commentRepository.deleteById(id);
     }
 
 }

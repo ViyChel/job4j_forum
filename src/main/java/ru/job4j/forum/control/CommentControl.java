@@ -32,14 +32,14 @@ public class CommentControl {
     }
 
     @GetMapping("/new/{id}")
-    public String newComment(@PathVariable("id") int id, Model model) {
+    public String newComment(@PathVariable("id") long id, Model model) {
         model.addAttribute("post", postService.findById(id));
         model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "comment/edit";
     }
 
     @PostMapping("/create")
-    public String create(@RequestParam("postId") int postId,
+    public String create(@RequestParam("postId") long postId,
                          @RequestParam("text") String message, HttpServletRequest req) {
         Comment comment = Comment.of(message);
         String userName = req.getUserPrincipal().getName();
@@ -50,13 +50,13 @@ public class CommentControl {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") int id) {
+    public String delete(@PathVariable("id") long id) {
         commentService.deleteById(id);
         return "redirect:/";
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") int id, Model model) {
+    public String edit(@PathVariable("id") long id, Model model) {
         model.addAttribute("comment", commentService.findById(id));
         model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "comment/edit";

@@ -1,10 +1,11 @@
 package ru.job4j.forum.service;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.job4j.forum.model.User;
-import ru.job4j.forum.repository.UserStore;
-
-import java.util.Collection;
+import ru.job4j.forum.repository.UserRepository;
 
 /**
  * Class UserService.
@@ -14,26 +15,24 @@ import java.util.Collection;
  * @since 22.03.2021
  */
 @Service
-public class UserService {
-    private final UserStore userStore;
+public class UserService  implements UserDetailsService {
+    private final UserRepository userRepository;
 
-    public UserService(UserStore userStore) {
-        this.userStore = userStore;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public Collection<User> getAll() {
-        return userStore.getUsers().values();
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username);
     }
 
     public void save(User user) {
-        userStore.save(user);
-    }
-
-    public User findById(int id) {
-        return userStore.getByIndex(id);
+        userRepository.save(user);
     }
 
     public User findByName(String name) {
-        return userStore.findByName(name);
+        return userRepository.findByUsername(name);
     }
+
 }

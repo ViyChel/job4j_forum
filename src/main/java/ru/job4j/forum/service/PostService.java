@@ -2,9 +2,7 @@ package ru.job4j.forum.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.forum.model.Post;
-import ru.job4j.forum.repository.PostStore;
-
-import java.util.Collection;
+import ru.job4j.forum.repository.PostRepository;
 
 /**
  * Class PostService.
@@ -15,28 +13,28 @@ import java.util.Collection;
  */
 @Service
 public class PostService {
-    private final PostStore postStore;
+    private final PostRepository postRepository;
     private final CommentService commentService;
 
-    public PostService(PostStore postStore, CommentService commentService) {
-        this.postStore = postStore;
+    public PostService(PostRepository postRepository, CommentService commentService) {
+        this.postRepository = postRepository;
         this.commentService = commentService;
     }
 
-    public Collection<Post> getAll() {
-        return postStore.getPosts().values();
+    public Iterable<Post> getAll() {
+        return postRepository.findAll();
     }
 
     public void save(Post post) {
-        postStore.save(post);
+        postRepository.save(post);
     }
 
-    public void deleteById(int id) {
-        postStore.delete(id);
+    public void deleteById(long id) {
+        postRepository.deleteById(id);
         commentService.deleteByPostId(id);
     }
 
-    public Post findById(int id) {
-        return postStore.getByIndex(id);
+    public Post findById(long id) {
+        return postRepository.findById(id).orElse(new Post());
     }
 }

@@ -32,7 +32,7 @@ public class PostControl {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String show(@PathVariable("id") long id, Model model) {
         model.addAttribute("post", postService.findById(id));
         model.addAttribute("comments", commentService.findAll());
         model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
@@ -54,13 +54,13 @@ public class PostControl {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") int id) {
+    public String delete(@PathVariable("id") long id) {
         postService.deleteById(id);
         return "redirect:/";
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") int id, Model model) {
+    public String edit(@PathVariable("id") long id, Model model) {
         model.addAttribute("post", postService.findById(id));
         model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "post/edit";

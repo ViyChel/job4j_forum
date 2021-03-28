@@ -3,6 +3,7 @@ package ru.job4j.forum.model;
 import lombok.Data;
 import ru.job4j.forum.utils.DateUtils;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -13,10 +14,18 @@ import java.time.LocalDateTime;
  * @since 26.03.2021
  */
 @Data
+@Entity
+@Table(name = "comments")
 public class Comment {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String message;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
     private Post post;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User author;
     private LocalDateTime created = LocalDateTime.now();
 
