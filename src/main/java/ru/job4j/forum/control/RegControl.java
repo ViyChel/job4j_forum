@@ -4,7 +4,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.forum.model.Role;
 import ru.job4j.forum.model.User;
@@ -32,7 +31,7 @@ public class RegControl {
 
     @PostMapping("/reg")
     public String save(User user, Model model) {
-        User userFromDb  = userService.findByName(user.getUsername());
+        User userFromDb = userService.findByName(user.getUsername());
         if (userFromDb != null) {
             model.addAttribute("message", "User exist!");
             return "auth/reg";
