@@ -14,11 +14,9 @@ import ru.job4j.forum.repository.PostRepository;
 @Service
 public class PostService {
     private final PostRepository postRepository;
-    private final CommentService commentService;
 
-    public PostService(PostRepository postRepository, CommentService commentService) {
+    public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
-        this.commentService = commentService;
     }
 
     public Iterable<Post> getAll() {
@@ -31,7 +29,6 @@ public class PostService {
 
     public void deleteById(long id) {
         postRepository.deleteById(id);
-        commentService.deleteByPostId(id);
     }
 
     public Post findById(long id) {

@@ -1,15 +1,18 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-<title>Форум о главном</title>
+    <title>Форум об отдыхе</title>
+</head>
 <body>
 <div class="container">
     <div class="row justify-content-end">
@@ -19,7 +22,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link"
-                   href='<c:url value="/logout"/> '> <c:out value="${user.username}"/> | Выйти
+                   href='<c:url value="/logout"/> '> <c:out value="${username}"/> | Выйти
                 </a>
             </li>
         </ul>
@@ -28,33 +31,19 @@
 <div class="container mt-3">
     <div class="row">
         <div class="card" style="width: 100%">
-            <div class="card-header">
-                <c:choose>
-                    <c:when test="${comment.id == 0}">
-                        Новый комментарий
-                    </c:when>
-                    <c:otherwise>
-                        Редактирование комментария
-                    </c:otherwise>
-                </c:choose>
-            </div>
+            <div class="card-header">Новый комментарий</div>
             <div class="card-body">
                 <form action="<c:url value='/comment/create'/>" method="post">
-                    <input type="hidden" value="${comment.id}" name="commentId">
                     <input type="hidden" value="${post.id}" name="postId">
                     <div class="form-group">
-                        <label>Тема поста:</label>
-                        <input type="text" class="form-control" name="name" value="${post.name}" readonly>
+                        <label for="name">Тема поста:</label>
+                        <input type="text" id="name" class="form-control" name="name" value="${post.name}" readonly>
                     </div>
                     <div class="form-group">
-                        <label>Автор:</label>
-                        <input type="text" class="form-control" name="username" value="${post.author.username}"
-                               readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>Комментарий:</label>
-                        <textarea name="text" class="form-control" placeholder="Введите текст комментария" cols="100"
-                                  rows="5" required>${comment.message}</textarea>
+                        <label for="text">Комментарий:</label>
+                        <textarea id="text" name="text" class="form-control" placeholder="Введите текст комментария"
+                                  cols="100"
+                                  rows="5" required></textarea>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Сохранить</button>

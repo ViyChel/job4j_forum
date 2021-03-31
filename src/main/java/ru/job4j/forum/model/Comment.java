@@ -22,9 +22,6 @@ public class Comment {
     private long id;
     private String message;
     @ManyToOne
-    @JoinColumn(name = "post_id")
-    private Post post;
-    @ManyToOne
     @JoinColumn(name = "user_id")
     private User author;
     private LocalDateTime created = LocalDateTime.now();

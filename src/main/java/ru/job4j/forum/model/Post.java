@@ -5,6 +5,8 @@ import ru.job4j.forum.utils.DateUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class Post.
@@ -22,20 +24,20 @@ public class Post {
     private long id;
     private String name;
     private String description;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User author;
     private LocalDateTime created = LocalDateTime.now();
 
-    public static Post of(String name, String description, User user) {
-        Post post = new Post();
-        post.name = name;
-        post.description = description;
-        post.author = user;
-        return post;
-    }
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
     public String formattedDateTime() {
         return DateUtils.dateFormat(created);
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
     }
 }

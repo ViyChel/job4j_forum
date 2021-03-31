@@ -1,15 +1,18 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-<title>Форум о главном</title>
+    <title>Форум об отдыхе</title>
+</head>
 <body>
 <div class="container">
     <div class="row justify-content-end">
@@ -19,7 +22,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link"
-                   href='<c:url value="/logout"/> '> <c:out value="${user.username}"/> | Выйти
+                   href='<c:url value="/logout"/> '> <c:out value="${username}"/> | Выйти
                 </a>
             </li>
         </ul>
@@ -30,7 +33,7 @@
         <div class="card" style="width: 100%">
             <div class="card-header">
                 <c:choose>
-                    <c:when test="${post.id == 0}">
+                    <c:when test="${post == null}">
                         Новый пост
                     </c:when>
                     <c:otherwise>
@@ -40,14 +43,17 @@
             </div>
             <div class="card-body">
                 <form action="<c:url value='/post/create'/>" method="post">
-                    <input type="hidden" value="${post.id}" name="id">
+                    <c:if test="${post != null}">
+                        <input type="hidden" value="${post.id}" name="id">
+                    </c:if>
                     <div class="form-group">
-                        <label>Название:</label>
-                        <input type="text" class="form-control" name="name" value="${post.name}">
+                        <label for="name">Название:</label>
+                        <input type="text" id="name" class="form-control" name="name" value="${post.name}">
                     </div>
                     <div class="form-group">
-                        <label>Описание:</label>
-                        <input type="text" class="form-control" name="description" value="${post.description}">
+                        <label for="description">Описание:</label>
+                        <input type="text" id="description" class="form-control" name="description"
+                               value="${post.description}">
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Сохранить</button>

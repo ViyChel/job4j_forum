@@ -22,21 +22,4 @@ public class CommentService {
     public Comment save(Comment model) {
         return commentRepository.save(model);
     }
-
-    public Comment findById(long id) {
-        return commentRepository.findById(id).orElse(new Comment());
-    }
-
-    public Iterable<Comment> findAll() {
-        return commentRepository.findAll();
-    }
-
-    public void deleteById(long id) {
-        commentRepository.deleteById(id);
-    }
-
-    public void deleteByPostId(long id) {
-        commentRepository.deleteById(id);
-    }
-
 }

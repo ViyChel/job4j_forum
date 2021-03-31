@@ -5,11 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.forum.model.Comment;
+import ru.job4j.forum.model.Post;
 import ru.job4j.forum.service.CommentService;
 import ru.job4j.forum.service.PostService;
 import ru.job4j.forum.service.UserService;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Class CommentControl.
@@ -33,32 +32,25 @@ public class CommentControl {
 
     @GetMapping("/new/{id}")
     public String newComment(@PathVariable("id") long id, Model model) {
-        model.addAttribute("post", postService.findById(id));
-        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        return "comment/edit";
+        String path = "comment/edit";
+        Post post = postService.findById(id);
+        if (post.getId() == 0) {
+            path = "error/404";
+        }
+        model.addAttribute("post", post);
+        model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
+        return path;
     }
 
     @PostMapping("/create")
-    public String create(@RequestParam("postId") long postId,
-                         @RequestParam("text") String message, HttpServletRequest req) {
+    public String create(@RequestParam("postId") int postId,
+                         @RequestParam("text") String message) {
         Comment comment = Comment.of(message);
-        String userName = req.getUserPrincipal().getName();
+        Post post = postService.findById(postId);
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         comment.setAuthor(userService.findByName(userName));
-        comment.setPost(postService.findById(postId));
+        post.addComment(comment);
         commentService.save(comment);
         return "redirect:/post/" + postId;
-    }
-
-    @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") long id) {
-        commentService.deleteById(id);
-        return "redirect:/";
-    }
-
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") long id, Model model) {
-        model.addAttribute("comment", commentService.findById(id));
-        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        return "comment/edit";
     }
 }

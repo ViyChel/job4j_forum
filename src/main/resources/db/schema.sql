@@ -21,8 +21,13 @@ create table comments
     id      bigserial primary key,
     created timestamp,
     message varchar(255),
-    user_id bigint references users (id),
-    post_id bigint references posts (id)
+    user_id bigint references users (id)
+);
+
+create table posts_comments
+(
+    post_id     bigint not null references posts (id),
+    comments_id bigint not null references comments (id)
 );
 
 create table user_role

@@ -31,9 +31,15 @@ public class RegControl {
 
     @PostMapping("/reg")
     public String save(User user, Model model) {
-        User userFromDb = userService.findByName(user.getUsername());
-        if (userFromDb != null) {
-            model.addAttribute("message", "User exist!");
+        User userFromDbByName = userService.findByName(user.getUsername());
+        User userFromDbByEmail = userService.findByEmail(user.getEmail());
+        if (userFromDbByName != null || userFromDbByEmail != null) {
+            if (userFromDbByName != null) {
+                model.addAttribute("nameError", "Имя занято");
+            }
+            if (userFromDbByEmail != null) {
+                model.addAttribute("emailError", "Email занят");
+            }
             return "auth/reg";
         }
         user.setPassword(encoder.encode(user.getPassword()));

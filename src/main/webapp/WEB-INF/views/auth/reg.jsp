@@ -4,17 +4,25 @@
 <html lang="en">
 <head>
     <!-- Required meta tags -->
-    <%@page contentType="text/html; charset=UTF-8" %>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/png" href="favicon.ico"/>
     <!-- Bootstrap CSS -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Форум job4j</title>
+    <!-- Custom CSS -->
+    <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/style.css'/>"/>
+    <title>Форум об отдыхе</title>
 </head>
 <body>
-
+<div class="container">
+    <div class="row justify-content-end">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href='<c:url value="/"/>'>Главная</a>
+            </li>
+        </ul>
+    </div>
+</div>
 <div class="container">
     <br>
     <div class="card bg-light">
@@ -23,11 +31,12 @@
             <form action='<c:url value="/reg" />' method="post">
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        <span class="input-group-text"> <em class="fa fa-user"></em> </span>
                     </div>
                     <c:choose>
-                        <c:when test="${message != null}">
-                            <input name="username" class="form-control" placeholder="Имя занято" type="text" required>
+                        <c:when test="${nameError != null}">
+                            <input name="username" class="form-control form-control-my" placeholder="${nameError}"
+                                   type="text" required>
                         </c:when>
                         <c:otherwise>
                             <input name="username" class="form-control" placeholder="Имя" type="text" required>
@@ -36,13 +45,21 @@
                 </div> <!-- form-group// -->
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                        <span class="input-group-text"> <em class="fa fa-envelope"></em> </span>
                     </div>
-                    <input name="email" class="form-control" placeholder="Email" type="email" required>
+                    <c:choose>
+                        <c:when test="${emailError != null}">
+                            <input name="email" class="form-control form-control-my" placeholder="${emailError}"
+                                   type="text" required>
+                        </c:when>
+                        <c:otherwise>
+                            <input name="email" class="form-control" placeholder="Email" type="email" required>
+                        </c:otherwise>
+                    </c:choose>
                 </div> <!-- form-group// -->
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                        <span class="input-group-text"> <em class="fa fa-lock"></em> </span>
                     </div>
                     <input name="password" id="password" class="form-control" placeholder="Введите пароль"
                            type="password" required>

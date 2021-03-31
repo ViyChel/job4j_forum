@@ -5,11 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.forum.model.Post;
-import ru.job4j.forum.service.CommentService;
 import ru.job4j.forum.service.PostService;
 import ru.job4j.forum.service.UserService;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Class PostControl.
@@ -22,32 +19,34 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/post")
 public class PostControl {
     private final PostService postService;
-    private final CommentService commentService;
     private final UserService userService;
 
-    public PostControl(PostService postService, CommentService commentService, UserService userService) {
+    public PostControl(PostService postService, UserService userService) {
         this.postService = postService;
-        this.commentService = commentService;
         this.userService = userService;
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") long id, Model model) {
-        model.addAttribute("post", postService.findById(id));
-        model.addAttribute("comments", commentService.findAll());
-        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        return "post/post";
+        String path = "post/post";
+        Post post = postService.findById(id);
+        if (post.getId() == 0) {
+            path = "error/404";
+        }
+        model.addAttribute("post", post);
+        model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
+        return path;
     }
 
     @GetMapping("/new")
-    public String newPost(@ModelAttribute("post") Post post, Model model) {
-        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    public String newPost(Model model) {
+        model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
         return "post/edit";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("post") Post post, HttpServletRequest req) {
-        String userName = req.getUserPrincipal().getName();
+    public String create(@ModelAttribute("post") Post post) {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         post.setAuthor(userService.findByName(userName));
         postService.save(post);
         return "redirect:/";
@@ -61,8 +60,13 @@ public class PostControl {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") long id, Model model) {
-        model.addAttribute("post", postService.findById(id));
-        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        return "post/edit";
+        String path = "post/edit";
+        Post post = postService.findById(id);
+        if (post.getId() == 0) {
+            path = "error/404";
+        }
+        model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("post", post);
+        return path;
     }
 }

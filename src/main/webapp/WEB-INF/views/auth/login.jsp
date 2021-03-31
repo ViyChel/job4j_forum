@@ -11,10 +11,18 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>Форум job4j</title>
+    <title>Форум об отдыхе</title>
 </head>
 <body>
-
+<div class="container">
+    <div class="row justify-content-end">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href='<c:url value="/"/>'>Главная</a>
+            </li>
+        </ul>
+    </div>
+</div>
 <div class="container">
     <br>
     <div class="card bg-light">

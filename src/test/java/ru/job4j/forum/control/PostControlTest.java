@@ -2,6 +2,7 @@ package ru.job4j.forum.control;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -48,6 +49,9 @@ class PostControlTest {
     @Test
     @WithMockUser
     void shouldReturnPostView() throws Exception {
+        Post post = new Post();
+        post.setId(1);
+        Mockito.when(postService.findById(1)).thenReturn(post);
         this.mockMvc.perform(get("/post/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -56,7 +60,20 @@ class PostControlTest {
 
     @Test
     @WithMockUser
+    void shouldReturnErrorViewIfPostDoesNotExist() throws Exception {
+        Mockito.when(postService.findById(5)).thenReturn(new Post());
+        this.mockMvc.perform(get("/post/5"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("error/404"));
+    }
+
+    @Test
+    @WithMockUser
     void shouldReturnPostEdit() throws Exception {
+        Post post = new Post();
+        post.setId(1);
+        Mockito.when(postService.findById(1)).thenReturn(post);
         this.mockMvc.perform(get("/post/edit/1"))
                 .andDo(print())
                 .andExpect(status().isOk())

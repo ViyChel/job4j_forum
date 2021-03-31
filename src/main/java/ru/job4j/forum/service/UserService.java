@@ -15,7 +15,7 @@ import ru.job4j.forum.repository.UserRepository;
  * @since 22.03.2021
  */
 @Service
-public class UserService  implements UserDetailsService {
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -35,4 +35,7 @@ public class UserService  implements UserDetailsService {
         return userRepository.findByUsername(name);
     }
 
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }
