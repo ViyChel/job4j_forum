@@ -1,4 +1,4 @@
-create table users
+create table if not exists users
 (
     id       bigserial primary key,
     email    varchar(255),
@@ -7,7 +7,7 @@ create table users
     username varchar(255)
 );
 
-create table posts
+create table if not exists posts
 (
     id          bigserial primary key,
     created     timestamp,
@@ -16,7 +16,7 @@ create table posts
     user_id     bigint references users (id)
 );
 
-create table comments
+create table if not exists comments
 (
     id      bigserial primary key,
     created timestamp,
@@ -24,13 +24,13 @@ create table comments
     user_id bigint references users (id)
 );
 
-create table posts_comments
+create table if not exists posts_comments
 (
     post_id     bigint not null references posts (id),
     comments_id bigint not null references comments (id)
 );
 
-create table user_role
+create table if not exists user_role
 (
     user_id bigint references users (id),
     roles   varchar(255)

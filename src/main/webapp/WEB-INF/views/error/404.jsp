@@ -20,7 +20,7 @@
         <h1>404</h1>
         <p> Страница не найдена!</p>
         <div class="sub">
-            <p><a href='<c:url value="/index"/>'>Вернуться на главную</a></p>
+            <p><a href='<c:url value="/"/>'>Вернуться на главную</a></p>
         </div>
     </div>
 </div>

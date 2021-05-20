@@ -4,20 +4,30 @@
 # Форум
 
 Посмотреть проект:
-https://infinite-tor-73593.herokuapp.com/
+https://immense-shore-93521.herokuapp.com/
 
-Стек технологий:
+### Описание
+Простой интернет-форум. Позволяет добавлять
+посты, отвечать на них. Также содержит регистрацию пользователей и
+авторизацию.
+
+### Технологии:
 
 * Spring Boot 2
 * Spring Security
-* Spring JPA
-* Spring MVC  
-* JSP/JSTL
+* Spring MVC
+* Spring Data
 * Java 11
+* PostgreSQL 11
+* Liquibase
+* JSP/JSTL
 * Apache Tomcat
-* Bootstrap  
+* CSS, Bootstrap
+* Maven
 * Junit Tests
-* CI/CD
+* Travis CI
+
+### Функциональность
 
 __Главная страница__
 ![img](img/main.png)
@@ -28,10 +38,10 @@ __Страница поста с комментариями__
 __Создание нового поста__
 ![img](img/new_post.png)
 
-__Добавление комментария__
+__Добавление комментария__<br>
 ![img](img/add_comment.png)
 
-__Редактирование поста__
+__Редактирование поста__<br>
 ![img](img/edit_post.png)
 
 __Страница регистрации__<br>
@@ -40,5 +50,8 @@ __Страница регистрации__<br>
 __Страница авторизации__<br>
 ![img](img/login.png)
 
-__Страница не найдена__
+__Страница не найдена__<br>
 ![img](img/404.png)
+
+__Схема базы данных__<br>
+![img](img/forum_DB.png)
