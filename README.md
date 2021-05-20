@@ -4,7 +4,7 @@
 # Форум
 
 Посмотреть проект:
-https://infinite-tor-73593.herokuapp.com/
+https://evening-hollows-65939.herokuapp.com/
 
 Стек технологий:
 
